@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     
     var index = -1
         
+    let maxPoints = 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScene()
@@ -98,14 +100,14 @@ extension ViewController {
         heightBox?.removeFromParentNode()
         heightBox = nil
         heightSlider.isHidden = true
-        heightSlider.value = 0.0
+        heightSlider.value = 0.02
     }
     
     private func addCuboid() {
         let center = getCenterPoint(pointA: (pointNodes?[0].position)!, pointB: (pointNodes?[2].position)!)
         let width = distanceBetweenPoints(pointA: (pointNodes?[0].position)!, pointB: (pointNodes?[1].position)!)
         let length = distanceBetweenPoints(pointA: (pointNodes?[1].position)!, pointB: (pointNodes?[2].position)!)
-        let cube = SCNBox(width: width, height: 0, length: length, chamferRadius: 0)
+        let cube = SCNBox(width: width, height: 0.02, length: length, chamferRadius: 0)
         cube.firstMaterial?.diffuse.contents = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 0.8794849537)
         let node = SCNNode(geometry: cube)
         node.position = center
@@ -117,14 +119,14 @@ extension ViewController {
 // MARK: - IBActions
 extension ViewController {
     @IBAction func hitTest(_ sender: UIButton) {
-        if index == 2 { return }
+        if index == maxPoints { return }
         if let position = doHitTestingOnExistingPlanes() {
             let node = createNewNode(at: position)
             sceneView.scene.rootNode.addChildNode(node)
             pointNodes?.append(node)
             index += 1
             lineNodes?.append([SCNNode]())
-            if index == 2 {
+            if index == maxPoints {
                 let diagonal = getLineNode(from: (pointNodes?[index].position)!, to: (pointNodes?[0].position)!)
                 sceneView.scene.rootNode.addChildNode(diagonal)
                 self.diagonal = diagonal
@@ -142,7 +144,6 @@ extension ViewController {
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
-        print(sender.value)
         if let box = heightBox?.geometry as? SCNBox {
             box.height = CGFloat(sender.value)
         }
@@ -185,7 +186,7 @@ extension ViewController: ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        if index == 2 || index == -1 { return }
+        if index == maxPoints || index == -1 { return }
         DispatchQueue.main.async {
             guard let currentPosition = self.doHitTestingOnExistingPlanes(), let start = self.pointNodes?[self.index] else { return }
 
@@ -231,19 +232,23 @@ extension ViewController {
     }
     
     private func getLineNode(from vector1: SCNVector3, to vector2: SCNVector3) -> SCNNode {
-        let lineToDraw = getLineGeometry(from: vector1, to: vector2)
-        lineToDraw.firstMaterial?.diffuse.contents = UIColor.red
-        lineToDraw.firstMaterial?.lightingModel = SCNMaterial.LightingModel.constant
-        let node = SCNNode(geometry: lineToDraw)
-        return node
-    }
-    
-    private func getLineGeometry(from vector1: SCNVector3, to vector2: SCNVector3) -> SCNGeometry {
-        let indices : [Int32] = [0,1]
-        let source = SCNGeometrySource(vertices: [vector1, vector2])
-        let element = SCNGeometryElement(indices: indices, primitiveType: .line)
-        let lineGeometry = SCNGeometry(sources: [source], elements: [element])
-        return lineGeometry
+        let cylinderLine = SCNCylinder(radius: 0.002, height: distanceBetweenPoints(pointA: vector1, pointB: vector2))
+        
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.white
+        material.lightingModel = .phong
+        cylinderLine.materials = [material]
+
+        let line = SCNNode(geometry: cylinderLine)
+        line.position = getCenterPoint(pointA: vector1, pointB: vector2)
+
+        // This is the change in x,y and z between node1 and node2
+        let dirVector = SCNVector3Make(vector2.x - vector1.x, vector2.y - vector1.y, vector2.z - vector1.z)
+        let yAngle = atan(dirVector.x / dirVector.z)
+        line.eulerAngles.x = .pi / 2
+        line.eulerAngles.y = yAngle
+        
+        return line
     }
     
     private func getDistance(from vector1: SCNVector3?, to vector2: SCNVector3?, unit: String) -> String {
@@ -270,7 +275,6 @@ extension ViewController {
         +   (pointA.y - pointB.y) * (pointA.y - pointB.y)
         +   (pointA.z - pointB.z) * (pointA.z - pointB.z)
         )
-        
         return CGFloat(l)
     }
     
