@@ -30,10 +30,9 @@ class ViewController: UIViewController {
     lazy var height : CGFloat  = 0.0
     
     var unit = "inch"
-        
     var index = -1
-        
     let maxPoints = 2
+    var currentAngle: Float = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,6 +124,8 @@ extension ViewController {
         node.position = center
         sceneView.scene.rootNode.addChildNode(node)
         heightBox = node
+        let rotateAlongYAxis = UIPanGestureRecognizer(target: self, action: #selector(yAxisGesture))
+        sceneView.addGestureRecognizer(rotateAlongYAxis)
     }
     
     private func displayMeasurements() {
@@ -185,6 +186,17 @@ extension ViewController {
         if width > 0.0 || length > 0.0 {
             displayMeasurements()
         }
+    }
+    
+    @objc func yAxisGesture(_ sender: UIPanGestureRecognizer) {
+        guard let nodeToRotate = heightBox else { return }
+        let translation = sender.translation(in: sender.view!)
+        var newAngleY = (Float)(translation.x)*(Float)(Double.pi)/180.0
+        newAngleY += currentAngle
+
+        nodeToRotate.eulerAngles.y = newAngleY
+
+        if(sender.state == .ended) { currentAngle = newAngleY }
     }
 }
 
