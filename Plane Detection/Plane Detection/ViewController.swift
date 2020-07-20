@@ -12,7 +12,7 @@ import ARKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var distanceLabel    : UILabel!
+    @IBOutlet weak var measurementLabel : UILabel!
     @IBOutlet weak var centerPoint      : UILabel!
     @IBOutlet weak var addPointButton   : UIButton!
     @IBOutlet var sceneView             : ARSCNView!
@@ -22,6 +22,12 @@ class ViewController: UIViewController {
     var heightBox   : SCNNode?
     var pointNodes  : [SCNNode]?
     var lineNodes   : [[SCNNode?]]?
+    
+    lazy var width   = "0.0cm"
+    lazy var length  = "0.0cm"
+    lazy var height  = "0.0cm"
+    
+    var unit = "cm"
     
     var index = -1
         
@@ -79,7 +85,10 @@ extension ViewController {
     }
     
     private func resetMeasurements() {
-        distanceLabel.text = ""
+        measurementLabel.text = ""
+        width   = "0.0cm"
+        length  = "0.0cm"
+        height  = "0.0cm"
         index = -1
         guard let pointNodes = self.pointNodes else { return }
         for node in pointNodes {
@@ -114,6 +123,14 @@ extension ViewController {
         sceneView.scene.rootNode.addChildNode(node)
         heightBox = node
     }
+    
+    private func displayMeasurements() {
+        self.measurementLabel.text = """
+        Width = \(self.width)
+        Length = \(self.length)
+        Height = \(self.height)
+        """
+    }
 }
 
 // MARK: - IBActions
@@ -146,6 +163,8 @@ extension ViewController {
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         if let box = heightBox?.geometry as? SCNBox {
             box.height = CGFloat(sender.value)
+            height = getDistanceAccordingToUnit(val: box.height, unit: unit)
+            displayMeasurements()
         }
     }
 }
@@ -200,8 +219,14 @@ extension ViewController: ARSCNViewDelegate {
             self.lineNodes?[self.index].append(lineNode)
             self.sceneView.scene.rootNode.addChildNode(lineNode)
 
-            let distance = self.getDistance(from: currentPosition, to: start.position, unit: "cm")
-            self.distanceLabel.text = distance
+            
+            if self.index == 0 {
+                self.width = self.getDistance(from: currentPosition, to: start.position, unit: self.unit)
+            } else if self.index == 1 {
+                self.length = self.getDistance(from: currentPosition, to: start.position, unit: self.unit)
+            }
+            
+            self.displayMeasurements()
         }
     }
 }
@@ -222,7 +247,7 @@ extension ViewController {
     }
     
     private func createNewNode(at position: SCNVector3) -> SCNNode {
-        let sphere = SCNSphere(radius: 0.005)
+        let sphere = SCNSphere(radius: 0.006)
         sphere.firstMaterial?.diffuse.contents = UIColor.green
         
         let node = SCNNode(geometry: sphere)
@@ -257,16 +282,21 @@ extension ViewController {
         }
         
         let distance = distanceBetweenPoints(pointA: vector1!, pointB: vector2!) // distance is in meters
-        var distanceToDisplay = distance
+        
+        return getDistanceAccordingToUnit(val: distance, unit: unit)
+    }
+    
+    private func getDistanceAccordingToUnit(val: CGFloat, unit: String) -> String {
+        var distanceToDisplay = val
         if unit == "inch" {
-            distanceToDisplay = distance * 39.3701
+            distanceToDisplay = val * 39.3701
         } else if unit == "feet" {
-            distanceToDisplay = distance * 3.28084
+            distanceToDisplay = val * 3.28084
         } else if unit == "cm" {
-            distanceToDisplay = distance * 100.0
+            distanceToDisplay = val * 100.0
         }
-        let meter = String(format: "%.1f %@", Float(distanceToDisplay), unit)
-        return meter
+        let distance = String(format: "%.1f %@", Float(distanceToDisplay), unit)
+        return distance
     }
     
     private func distanceBetweenPoints(pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {

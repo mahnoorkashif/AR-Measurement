@@ -18,10 +18,10 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                             </arscnView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IR1-Sf-Pio">
-                                <rect key="frame" x="10" y="59" width="394" height="0.0"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IR1-Sf-Pio">
+                                <rect key="frame" x="207" y="59" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -38,11 +38,15 @@
                                     <action selector="hitTest:" destination="BV1-FR-VrT" eventType="touchUpInside" id="nRZ-Fj-DQp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k02-MQ-2ei">
-                                <rect key="frame" x="336" y="44" width="58" height="32"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k02-MQ-2ei">
+                                <rect key="frame" x="359" y="44" width="35" height="35"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="  Reset  ">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Rj4-Dk-pOr"/>
+                                    <constraint firstAttribute="width" constant="35" id="Ryr-Xs-9Vk"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="arrow.clockwise" catalog="system">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -50,17 +54,17 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDA-Bk-rzG">
-                                <rect key="frame" x="202" y="443" width="10" height="10"/>
+                                <rect key="frame" x="203" y="444" width="8" height="8"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="10" id="Wkx-Hc-ZVM"/>
-                                    <constraint firstAttribute="width" constant="10" id="iga-aj-cdQ"/>
+                                    <constraint firstAttribute="height" constant="8" id="Wkx-Hc-ZVM"/>
+                                    <constraint firstAttribute="width" constant="8" id="iga-aj-cdQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1.5" translatesAutoresizingMaskIntoConstraints="NO" id="zOP-io-v6o">
+                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.02" minValue="0.02" maxValue="1.5" translatesAutoresizingMaskIntoConstraints="NO" id="zOP-io-v6o">
                                 <rect key="frame" x="163" y="433" width="404" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="fP6-U1-09b"/>
@@ -72,12 +76,11 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="IR1-Sf-Pio" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="10" id="0mg-Hr-Hda"/>
                             <constraint firstItem="p36-pX-owI" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="1pT-TI-wRL"/>
                             <constraint firstItem="iDA-Bk-rzG" firstAttribute="centerY" secondItem="U0K-SW-4ec" secondAttribute="centerY" id="35H-ZU-c3m"/>
-                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="IR1-Sf-Pio" secondAttribute="trailing" constant="10" id="EaZ-Th-aPx"/>
                             <constraint firstAttribute="trailing" secondItem="zOP-io-v6o" secondAttribute="trailing" constant="-151" id="Fch-N6-ZaK"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
+                            <constraint firstItem="IR1-Sf-Pio" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="IVK-L7-MpH"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="p36-pX-owI" secondAttribute="bottom" constant="30" id="Iwc-fO-9qq"/>
                             <constraint firstItem="iDA-Bk-rzG" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="KXx-HB-j10"/>
                             <constraint firstItem="zOP-io-v6o" firstAttribute="centerY" secondItem="U0K-SW-4ec" secondAttribute="centerY" id="OCq-xR-nr9"/>
@@ -93,8 +96,8 @@
                     <connections>
                         <outlet property="addPointButton" destination="p36-pX-owI" id="HyZ-uG-gne"/>
                         <outlet property="centerPoint" destination="iDA-Bk-rzG" id="Twe-qn-Fnl"/>
-                        <outlet property="distanceLabel" destination="IR1-Sf-Pio" id="KUT-HU-r8g"/>
                         <outlet property="heightSlider" destination="zOP-io-v6o" id="HzI-hF-da6"/>
+                        <outlet property="measurementLabel" destination="IR1-Sf-Pio" id="KUT-HU-r8g"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
@@ -104,6 +107,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.clockwise" catalog="system" width="56" height="64"/>
         <image name="plus" catalog="system" width="64" height="56"/>
     </resources>
 </document>
