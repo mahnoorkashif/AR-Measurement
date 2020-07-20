@@ -38,7 +38,7 @@
                                     <action selector="hitTest:" destination="BV1-FR-VrT" eventType="touchUpInside" id="nRZ-Fj-DQp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k02-MQ-2ei">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k02-MQ-2ei">
                                 <rect key="frame" x="359" y="44" width="35" height="35"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -66,6 +66,7 @@
                             </label>
                             <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.02" minValue="0.02" maxValue="1.5" translatesAutoresizingMaskIntoConstraints="NO" id="zOP-io-v6o">
                                 <rect key="frame" x="163" y="433" width="404" height="31"/>
+                                <color key="tintColor" red="0.88235294119999996" green="0.16078431369999999" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="fP6-U1-09b"/>
                                 </constraints>
@@ -73,11 +74,65 @@
                                     <action selector="sliderValueChanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="82Z-zX-ctN"/>
                                 </connections>
                             </slider>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xBs-uz-bu3">
+                                <rect key="frame" x="20" y="44" width="90" height="120"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VE6-Yr-gC2">
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="30"/>
+                                        <color key="backgroundColor" red="0.88235294119999996" green="0.16078431369999999" blue="0.1450980392" alpha="0.75353009259259263" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="inch">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="unitChanged:" destination="BV1-FR-VrT" eventType="touchUpInside" id="3d4-NI-X2I"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFD-0a-Wn9">
+                                        <rect key="frame" x="0.0" y="30" width="90" height="30"/>
+                                        <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="meter">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="unitChanged:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Rni-Vb-i6H"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHV-3X-mAD">
+                                        <rect key="frame" x="0.0" y="60" width="90" height="30"/>
+                                        <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="cm">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="unitChanged:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Dvv-iX-9b2"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2B-X9-ulS">
+                                        <rect key="frame" x="0.0" y="90" width="90" height="30"/>
+                                        <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="feet">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="unitChanged:" destination="BV1-FR-VrT" eventType="touchUpInside" id="evd-wD-SZR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="qt6-ql-RFI"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="p36-pX-owI" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="1pT-TI-wRL"/>
                             <constraint firstItem="iDA-Bk-rzG" firstAttribute="centerY" secondItem="U0K-SW-4ec" secondAttribute="centerY" id="35H-ZU-c3m"/>
+                            <constraint firstItem="xBs-uz-bu3" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" id="6tb-AF-S29"/>
                             <constraint firstAttribute="trailing" secondItem="zOP-io-v6o" secondAttribute="trailing" constant="-151" id="Fch-N6-ZaK"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
                             <constraint firstItem="IR1-Sf-Pio" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="IVK-L7-MpH"/>
@@ -88,6 +143,7 @@
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="k02-MQ-2ei" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" id="Yga-dR-TeN"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="k02-MQ-2ei" secondAttribute="trailing" constant="20" id="dSf-zd-o0I"/>
+                            <constraint firstItem="xBs-uz-bu3" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="diD-3U-r7P"/>
                             <constraint firstItem="IR1-Sf-Pio" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="15" id="nHH-Q9-uNT"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
                         </constraints>
@@ -95,9 +151,11 @@
                     </view>
                     <connections>
                         <outlet property="addPointButton" destination="p36-pX-owI" id="HyZ-uG-gne"/>
+                        <outlet property="buttonsStack" destination="xBs-uz-bu3" id="Yt1-LC-dQV"/>
                         <outlet property="centerPoint" destination="iDA-Bk-rzG" id="Twe-qn-Fnl"/>
                         <outlet property="heightSlider" destination="zOP-io-v6o" id="HzI-hF-da6"/>
                         <outlet property="measurementLabel" destination="IR1-Sf-Pio" id="KUT-HU-r8g"/>
+                        <outlet property="resetButton" destination="k02-MQ-2ei" id="x06-EM-3dT"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>

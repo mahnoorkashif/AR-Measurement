@@ -12,23 +12,25 @@ import ARKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var measurementLabel : UILabel!
     @IBOutlet weak var centerPoint      : UILabel!
+    @IBOutlet weak var measurementLabel : UILabel!
+    @IBOutlet weak var resetButton      : UIButton!
     @IBOutlet weak var addPointButton   : UIButton!
-    @IBOutlet var sceneView             : ARSCNView!
     @IBOutlet weak var heightSlider     : UISlider!
+    @IBOutlet weak var sceneView        : ARSCNView!
+    @IBOutlet weak var buttonsStack     : UIStackView!
     
     var diagonal    : SCNNode?
     var heightBox   : SCNNode?
     var pointNodes  : [SCNNode]?
     var lineNodes   : [[SCNNode?]]?
     
-    lazy var width   = "0.0cm"
-    lazy var length  = "0.0cm"
-    lazy var height  = "0.0cm"
+    lazy var width  : CGFloat  = 0.0
+    lazy var length : CGFloat  = 0.0
+    lazy var height : CGFloat  = 0.0
     
-    var unit = "cm"
-    
+    var unit = "inch"
+        
     var index = -1
         
     let maxPoints = 2
@@ -79,6 +81,7 @@ extension ViewController {
     
     private func initUI() {
         centerPoint.layer.cornerRadius = centerPoint.frame.width / 2
+        resetButton.layer.cornerRadius = resetButton.frame.width / 2
         addPointButton.layer.cornerRadius = addPointButton.frame.width / 2
         heightSlider.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi/2))
         view.layoutIfNeeded()
@@ -86,9 +89,9 @@ extension ViewController {
     
     private func resetMeasurements() {
         measurementLabel.text = ""
-        width   = "0.0cm"
-        length  = "0.0cm"
-        height  = "0.0cm"
+        width   = 0.0
+        length  = 0.0
+        height  = 0.0
         index = -1
         guard let pointNodes = self.pointNodes else { return }
         for node in pointNodes {
@@ -126,9 +129,9 @@ extension ViewController {
     
     private func displayMeasurements() {
         self.measurementLabel.text = """
-        Width = \(self.width)
-        Length = \(self.length)
-        Height = \(self.height)
+        Width = \(getDistanceAccordingToUnit(val: width, unit: unit))
+        Length = \(getDistanceAccordingToUnit(val: length, unit: unit))
+        Height = \(getDistanceAccordingToUnit(val: height, unit: unit))
         """
     }
 }
@@ -163,7 +166,23 @@ extension ViewController {
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         if let box = heightBox?.geometry as? SCNBox {
             box.height = CGFloat(sender.value)
-            height = getDistanceAccordingToUnit(val: box.height, unit: unit)
+            height = box.height
+            displayMeasurements()
+        }
+    }
+    
+    @IBAction func unitChanged(_ sender: UIButton) {
+        self.unit = sender.titleLabel?.text ?? ""
+        for view in buttonsStack.arrangedSubviews {
+            if let v = view as? UIButton {
+                if v == sender {
+                    sender.backgroundColor = #colorLiteral(red: 0.8823529412, green: 0.1607843137, blue: 0.1450980392, alpha: 0.7535300926)
+                } else {
+                    v.backgroundColor = .separator
+                }
+            }
+        }
+        if width > 0.0 || length > 0.0 {
             displayMeasurements()
         }
     }
@@ -276,14 +295,11 @@ extension ViewController {
         return line
     }
     
-    private func getDistance(from vector1: SCNVector3?, to vector2: SCNVector3?, unit: String) -> String {
+    private func getDistance(from vector1: SCNVector3?, to vector2: SCNVector3?, unit: String) -> CGFloat {
         if vector1 == nil || vector2 == nil {
-            return "0"
+            return 0.0
         }
-        
-        let distance = distanceBetweenPoints(pointA: vector1!, pointB: vector2!) // distance is in meters
-        
-        return getDistanceAccordingToUnit(val: distance, unit: unit)
+        return distanceBetweenPoints(pointA: vector1!, pointB: vector2!) // distance is in meters
     }
     
     private func getDistanceAccordingToUnit(val: CGFloat, unit: String) -> String {
