@@ -149,7 +149,7 @@ extension ViewController {
             lineNodes?.append([SCNNode]())
             if index == maxPoints {
                 let diagonal = getLineNode(from: (pointNodes?[index].position)!, to: (pointNodes?[0].position)!)
-                sceneView.scene.rootNode.addChildNode(diagonal)
+//                sceneView.scene.rootNode.addChildNode(diagonal)
                 self.diagonal = diagonal
                 addCuboid()
                 if let box = heightBox?.geometry as? SCNBox {
@@ -168,6 +168,7 @@ extension ViewController {
         if let box = heightBox?.geometry as? SCNBox {
             box.height = CGFloat(sender.value)
             height = box.height
+            heightBox?.pivot = SCNMatrix4MakeTranslation(0, Float(-(box.height/2)), 0)
             displayMeasurements()
         }
     }
@@ -202,12 +203,6 @@ extension ViewController {
 
 // MARK: - ARSCNViewDelegate
 extension ViewController: ARSCNViewDelegate {
-   //  Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-        return node
-    }
-    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         let meshNode: SCNNode
 
@@ -266,7 +261,7 @@ extension ViewController: ARSCNViewDelegate {
 extension ViewController {
     private func doHitTestingOnExistingPlanes() -> SCNVector3? {
         let results = sceneView.hitTest(view.center, types: .existingPlane)
-        if let result = results.first {
+        if let result = results.last {
             let hitPos = self.positionFromTransform(result.worldTransform)
             return hitPos
         }
