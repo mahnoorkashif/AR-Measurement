@@ -126,6 +126,19 @@ extension ViewController {
         heightBox = node
         let rotateAlongYAxis = UIPanGestureRecognizer(target: self, action: #selector(yAxisGesture))
         sceneView.addGestureRecognizer(rotateAlongYAxis)
+        heightBox?.eulerAngles.y = calculateAngle(pointA: (pointNodes?[0].position)!, pointB: (pointNodes?[1].position)!)
+        pointNodes?[0].removeFromParentNode()
+        pointNodes?[1].removeFromParentNode()
+        pointNodes?[2].removeFromParentNode()
+        var i = 0
+        guard let lineNodes = self.lineNodes else { return }
+        for lineNode in lineNodes {
+            for line in lineNode {
+                line?.removeFromParentNode()
+            }
+            self.lineNodes?[i].removeAll()
+            i += 1
+        }
     }
     
     private func displayMeasurements() {
@@ -198,6 +211,7 @@ extension ViewController {
         nodeToRotate.eulerAngles.y = newAngleY
 
         if(sender.state == .ended) { currentAngle = newAngleY }
+        
     }
 }
 
@@ -333,5 +347,19 @@ extension ViewController {
     
     private func getCenterPoint(pointA: SCNVector3, pointB: SCNVector3) -> SCNVector3 {
         return SCNVector3Make((pointA.x + pointB.x)/2, (pointA.y + pointB.y)/2, (pointA.z + pointB.z)/2)
+    }
+    
+    private func getVectorBetweenTwoPoints(pointA: SCNVector3, pointB: SCNVector3) -> SCNVector3 {
+        return SCNVector3Make((pointA.x - pointB.x), (pointA.y - pointB.y), (pointA.z - pointB.z))
+    }
+    
+    private func calculateAngle(pointA: SCNVector3, pointB: SCNVector3) -> Float {
+        //px = d cos theeta
+        let vector = getVectorBetweenTwoPoints(pointA: pointA, pointB: pointB)
+        let magnitude = distanceBetweenPoints(pointA: pointA, pointB: pointB)
+        let angle = acos(vector.x/Float(magnitude))
+        print(angle)
+        //(pointNodes?[0].position)! (pointNodes?[1].position)!
+        return angle
     }
  }

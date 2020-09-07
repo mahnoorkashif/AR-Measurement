@@ -65,7 +65,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.02" minValue="0.02" maxValue="1.5" translatesAutoresizingMaskIntoConstraints="NO" id="zOP-io-v6o">
-                                <rect key="frame" x="163" y="433" width="404" height="31"/>
+                                <rect key="frame" x="212" y="433" width="404" height="31"/>
                                 <color key="tintColor" red="0.88235294119999996" green="0.16078431369999999" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="fP6-U1-09b"/>
@@ -133,7 +133,7 @@
                             <constraint firstItem="p36-pX-owI" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="1pT-TI-wRL"/>
                             <constraint firstItem="iDA-Bk-rzG" firstAttribute="centerY" secondItem="U0K-SW-4ec" secondAttribute="centerY" id="35H-ZU-c3m"/>
                             <constraint firstItem="xBs-uz-bu3" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" id="6tb-AF-S29"/>
-                            <constraint firstAttribute="trailing" secondItem="zOP-io-v6o" secondAttribute="trailing" constant="-151" id="Fch-N6-ZaK"/>
+                            <constraint firstAttribute="trailing" secondItem="zOP-io-v6o" secondAttribute="trailing" constant="-200" id="Fch-N6-ZaK"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
                             <constraint firstItem="IR1-Sf-Pio" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="IVK-L7-MpH"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="p36-pX-owI" secondAttribute="bottom" constant="30" id="Iwc-fO-9qq"/>
